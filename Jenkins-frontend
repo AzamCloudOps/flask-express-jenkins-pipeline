@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    environment {
+        EXPRESS_DIR = "${WORKSPACE}/express-frontend"
+    }
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git 'https://github.com/AzamCloudOps/flask-express-ec2-terraform.git'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                dir("${EXPRESS_DIR}") {
+                    sh 'npm install'
+                }
+            }
+        }
+        stage('Restart Express') {
+            steps {
+                dir("${EXPRESS_DIR}") {
+                    sh 'pm2 restart express-app || pm2 start app.js --name express-app'
+                }
+            }
+        }
+    }
+}
+

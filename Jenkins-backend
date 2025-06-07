@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    environment {
+        FLASK_DIR = "${WORKSPACE}/flask-backend"
+    }
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git 'https://github.com/AzamCloudOps/flask-express-ec2-terraform.git'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                dir("${FLASK_DIR}") {
+                    sh 'pip3 install -r requirements.txt'
+                }
+            }
+        }
+        stage('Restart Flask') {
+            steps {
+                dir("${FLASK_DIR}") {
+                    sh 'pm2 restart flask-app || pm2 start app.py --interpreter=python3 --name flask-app'
+                }
+            }
+        }
+    }
+}
+
+
