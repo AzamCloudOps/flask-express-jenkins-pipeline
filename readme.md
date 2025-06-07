@@ -171,7 +171,7 @@ pipeline {
 
 ---
 
-## 🚀 Trigger CI/CD via GitHub Webhook (Optional)
+##  Trigger CI/CD via GitHub Webhook (Optional)
 
 1. Go to your GitHub repo → Settings → Webhooks
 2. Payload URL: `http://<your-jenkins-ip>:8080/github-webhook/`
